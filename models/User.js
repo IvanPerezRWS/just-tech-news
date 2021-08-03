@@ -4,7 +4,12 @@ const sequalize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
 // create out User model
-class User extends Model {}
+class User extends Model {
+    // Set up method to run on instance data (per user) tp check data
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password);
+    }
+}
 
 // define table columns and configuration 
 User.init(
@@ -66,3 +71,5 @@ User.init(
         modelName: 'user'
       }
 );
+
+module.exports = User;
